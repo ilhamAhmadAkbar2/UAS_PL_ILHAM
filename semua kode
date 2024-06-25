@@ -1,0 +1,138 @@
+soal 1 : 
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        String filePath = "UAS_PL/src/new_data.txt";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            int count = 0;
+            while ((line = br.readLine()) != null) {
+                String[] dimensions = line.split("\t");
+                double length = Double.parseDouble(dimensions[0]);
+                double width = Double.parseDouble(dimensions[1]);
+                double height = Double.parseDouble(dimensions[2]);
+
+                Cuboid cuboid = new Cuboid(length, width, height);
+
+                System.out.println("Cuboid " + (++count));
+                System.out.println(cuboid);
+                System.out.println("Volume : " + cuboid.getVolume());
+                System.out.println("luas permukaan " + cuboid.getSurfaceArea());
+                System.out.println();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class Cuboid soal 1 :
+
+public class Cuboid {
+    private double length;
+    private double width;
+    private double height;
+
+    public Cuboid(double length, double width, double height) {
+        this.length = length;
+        this.width = width;
+        this.height = height;
+    }
+
+    public double getVolume() {
+        return length * width * height;
+    }
+
+    public double getSurfaceArea() {
+        return 2 * (length * width + length * height + width * height);
+    }
+
+    @Override
+    public String toString() {
+        return "Cuboid [panjang : " + length + ", lebar : " + width + ", tinggi : " + height + "]";
+    }
+}
+
+
+soal 2 : 
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Main_soal2 {
+    public static void main(String[] args) {
+        String inputFilePath = "UAS_PL/src/new_data.txt";
+        String outputFilePath = "hasil .txt";
+
+        List<Cuboid_soal2> cuboids = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(inputFilePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] dimensions = line.split("\t");
+                double length = Double.parseDouble(dimensions[0]);
+                double width = Double.parseDouble(dimensions[1]);
+                double height = Double.parseDouble(dimensions[2]);
+
+                Cuboid_soal2 cuboid = new Cuboid_soal2(length, width, height);
+                cuboids.add(cuboid);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Collections.sort(cuboids);
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFilePath))) {
+            for (Cuboid_soal2 cuboid : cuboids) {
+                bw.write(String.format("luas permukaan : %.2f", cuboid.getSurfaceArea()));
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class cuboid soal 2 :
+
+public class Cuboid_soal2 implements Comparable<Cuboid_soal2> {
+    private double length;
+    private double width;
+    private double height;
+
+    public Cuboid_soal2(double length, double width, double height) {
+        this.length = length;
+        this.width = width;
+        this.height = height;
+    }
+
+    public double getVolume() {
+        return length * width * height;
+    }
+
+    public double getSurfaceArea() {
+        return 2 * (length * width + length * height + width * height);
+    }
+
+    @Override
+    public int compareTo(Cuboid_soal2 other) {
+        return Double.compare(this.getSurfaceArea(), other.getSurfaceArea());
+    }
+
+    @Override
+    public String toString() {
+        return "Cuboid_soal2 [panjang : " + length + ", lebar : " + width + ", tinggi : " + height + "]";
+    }
+}
